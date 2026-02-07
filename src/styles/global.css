@@ -197,6 +197,7 @@ a {
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  transform: translateX(-.7rem);
 }
 
 .group-title.active {
@@ -234,20 +235,16 @@ a {
   transition: background-color 160ms ease, color 160ms ease;
 }
 
-.group-list a {
-  margin-left: 0.7rem;
-}
-
 .docs-sidebar a span {
   font-family: "Space Grotesk", sans-serif;
   color: var(--highlight);
   min-width: 1.8rem;
+  transform: translateY(-0.04rem);
 }
 
 .docs-sidebar a strong {
   font-size: 0.92rem;
   font-weight: 600;
-  line-height: 1.4;
 }
 
 .docs-sidebar a:hover,
