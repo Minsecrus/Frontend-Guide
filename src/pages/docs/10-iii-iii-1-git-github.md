@@ -4,7 +4,6 @@ title: "III. 基本开发环境和工具 / III.1 版本控制系统：Git 和 Gi
 order: 10
 slug: "10-iii-iii-1-git-github"
 ---
-### **III.1 版本控制系统：Git 和 GitHub 协作开发**
 
 [**Git**](https://git-scm.com/) 是一种快速、可扩展、分布式版本控制系统，可跟踪文件更改，允许开发者查看项目历史（谁、什么、何时、为何）、恢复到以前的版本并进行协作。
 

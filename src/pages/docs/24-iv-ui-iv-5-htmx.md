@@ -4,7 +4,6 @@ title: "IV. 前端框架和库：构建现代 UI / IV.5 htmx：超媒体驱动�
 order: 24
 slug: "24-iv-ui-iv-5-htmx"
 ---
-### **IV.5 htmx：超媒体驱动开发**
 
 **htmx** 允许使用 HTML 实现丰富的交互式 Web 界面，同时最小化 JavaScript 的使用。它通过响应服务器请求部分更新 HTML 来工作，利用 HTTP 方法和 hx-get、hx-target、hx-trigger、hx-swap 等属性。
 

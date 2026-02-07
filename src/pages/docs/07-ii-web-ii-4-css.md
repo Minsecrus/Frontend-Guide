@@ -4,15 +4,14 @@ title: "II. 基础 Web 技术：核心支柱 / II.4 现代 CSS 架构与策略"
 order: 7
 slug: "07-ii-web-ii-4-css"
 ---
-### **II.4 现代 CSS 架构与策略**
 
 现代前端开发对 CSS 提出了远超以往的要求，不仅要实现美观且功能完善的界面，更要确保代码的可维护性、可扩展性以及团队协作效率。传统的 CSS 编写方式在大型项目中容易遭遇全局作用域污染、命名冲突和样式难以复用等挑战。为应对这些问题，业界涌现出多种现代 CSS 架构与策略，旨在优化开发体验并提升项目质量。
 
-#### **II.4.1 CSS 预处理器 (CSS Preprocessors)**
+## **II.4.1 CSS 预处理器 (CSS Preprocessors)**
 
 CSS 预处理器 (CSS Preprocessor) 是一种脚本语言，它的作用是扩展 CSS 的功能。写完这些带有新特性的代码后，需要通过一个“编译器”将它编译成浏览器能够识别的、标准的 CSS 文件。
 
-##### **1. Sass / SCSS**
+### **1. Sass / SCSS**
 
 Sass 是最成熟、最稳定、功能最强大的 CSS 预处理器之一。它有两种不同的语法：
 
@@ -21,11 +20,11 @@ Sass 是最成熟、最稳定、功能最强大的 CSS 预处理器之一。它�
 
 由于其强大的功能和稳定的生态，Sass/SCSS 在社区中非常受欢迎。
 
-##### **2. Less**
+### **2. Less**
 
 [Less](https://lesscss.org/) 是另一个流行的预处理器，其语法和功能与 SCSS 非常相似。它受到了 Sass 的启发，但一些语法的实现略有不同（例如，变量使用 @ 而不是 $）。Less 最初的一个特点是它可以通过浏览器端的 JavaScript 库来实时编译，但这在生产环境中很少使用，通常还是在构建时进行服务器端编译。
 
-#### **II.4.2 PostCSS：用 JavaScript 插件来转换 CSS 的工具平台**
+## **II.4.2 PostCSS：用 JavaScript 插件来转换 CSS 的工具平台**
 
 [PostCSS](https://postcss.org/) 可以：
 
@@ -34,7 +33,7 @@ Sass 是最成熟、最稳定、功能最强大的 CSS 预处理器之一。它�
 - 使用未来的 CSS 语法：通过像 [postcss-preset-env](https://preset-env.cssdb.org/) 这样的插件，你可以现在就使用尚未被所有浏览器支持的最新 CSS 规范，它会自动将其转换为当前浏览器兼容的等效代码。
 - 代码优化和压缩：通过插件可以自动压缩 CSS 代码，移除注释等。
 
-#### **II.4.3 原子化 CSS (Utility-First CSS)**
+## **II.4.3 原子化 CSS (Utility-First CSS)**
 
 原子化 CSS 框架，如 [Tailwind CSS](https://tailwindcss.com/) 和 [UnoCSS](https://unocss.dev/)，革新了传统的语义化 CSS 类名模式，转而采用“Utility-First”的理念。这意味着开发者直接在 HTML 中使用大量预定义的、单用途的原子类（例如 text-center、bg-blue-500、px-4）来构建样式，而非创建自定义的组件类名。这种方法的核心价值在于显著提升开发效率和设计一致性。开发者无需离开 HTML 文件编写自定义 CSS，从而实现快速原型开发和迭代。
 
@@ -50,7 +49,7 @@ Sass 是最成熟、最稳定、功能最强大的 CSS 预处理器之一。它�
 
 尽管原子化 CSS 具有诸多优势，但也存在一些权衡。对于习惯传统 CSS 的开发者来说，其学习曲线可能较陡峭。此外，HTML 中可能会充斥大量原子类，导致代码显得冗长。基于 JavaScript props 的动态样式实现起来可能不如 CSS-in-JS 直观。
 
-#### **II.4.4 CSS-in-JS**
+## **II.4.4 CSS-in-JS**
 
 CSS-in-JS 是一种将 CSS 样式直接嵌入到 JavaScript 组件中的技术。它允许开发者使用 JavaScript 来定义和管理组件的样式，从而实现样式与组件的紧密耦合。这种方法在组件化开发中具有天然优势，样式随组件的创建和销毁而加载和卸载。其核心优势在于自动生成唯一的类名，确保样式只作用于其定义的组件，有效避免了全局样式污染和命名冲突。此外，CSS-in-JS 可以轻松地基于组件的 props 或状态进行动态样式调整，实现高度灵活的 UI，并内置或易于实现主题化机制，便于管理和切换应用的主题。
 
@@ -58,7 +57,7 @@ CSS-in-JS 是一种将 CSS 样式直接嵌入到 JavaScript 组件中的技术�
 
 然而，CSS-in-JS 也存在一些权衡。样式逻辑作为 JavaScript 的一部分，会增加 JavaScript 的打包体积。在运行时进行样式计算和注入会带来一定的性能开销，尤其是在 React 的并发渲染模式下可能出现问题。在 SSR 配置不当时，可能出现无样式内容闪烁（FOUC）的问题。此外，自动生成的类名不易读，可能增加调试难度。
 
-#### **II.4.5 CSS Modules**
+## **II.4.5 CSS Modules**
 
 [CSS Modules](https://github.com/css-modules/css-modules) 是一种将 CSS 文件中的类名局部作用域化的方案。它通过在构建时自动生成唯一的哈希值来重命名 CSS 类名，从而确保每个组件的样式都是独立的，不会相互冲突。其核心优势在于，默认情况下，CSS 类名被限定在组件内部，彻底解决了全局命名冲突问题。开发者可以使用熟悉的 CSS、Sass 或 Less 等语法编写样式，学习成本较低。由于样式在构建时处理，因此没有运行时性能负担。组件拥有自己的独立样式文件，使得样式更易于管理和维护，尤其是在大型代码库中。样式与组件之间的关联直观明了，便于调试。
 
@@ -66,11 +65,11 @@ CSS-in-JS 是一种将 CSS 样式直接嵌入到 JavaScript 组件中的技术�
 
 CSS Modules 的权衡在于，相比 CSS-in-JS，其在基于 props 或状态进行复杂动态样式方面的能力较弱。它也缺乏内置的主题系统，需要额外工具或手动实现主题化。此外，它需要 [Webpack](https://webpack.js.org/) 或其他打包工具正确配置来处理 .module.css 文件。
 
-#### **II.4.6 设计系统与组件库中的 CSS**
+## **II.4.6 设计系统与组件库中的 CSS**
 
 在构建设计系统和组件库时，选择合适的 CSS 架构至关重要。这些架构能够帮助团队统一风格、提高复用性、提升协作效率，并易于维护和扩展。例如，原子化 CSS 可以作为设计系统底层的基础工具集，提供高度可组合的原子类；CSS-in-JS 或 CSS Modules 则可以用于构建独立的、封装性强的组件，确保其样式隔离。许多大型设计系统会采用混合策略，根据具体需求选择最合适的方案。
 
-#### **II.4.7 表：现代 CSS 架构对比 (Utility-First CSS vs. CSS-in-JS vs. CSS Modules)**
+## **II.4.7 表：现代 CSS 架构对比 (Utility-First CSS vs. CSS-in-JS vs. CSS Modules)**
 
 | 特性/架构    | 原子化 CSS (e.g., [Tailwind CSS](https://tailwindcss.com/), [UnoCSS](https://unocss.dev/)) | CSS-in-JS (e.g., [styled-components](https://styled-components.com/), [Emotion](https://emotion.sh/)) | [CSS Modules](https://github.com/css-modules/css-modules) |
 | :----------- | :----------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------- | :-------------------------------------------------------- |

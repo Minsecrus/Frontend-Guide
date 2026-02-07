@@ -4,7 +4,6 @@ title: "VI. 新兴技术和专业领域 / VI.2 WebAssembly (WASM)：释放 Web �
 order: 46
 slug: "46-vi-vi-2-webassembly-wasm-web"
 ---
-### **VI.2 WebAssembly (WASM)：释放 Web 平台的原生性能**
 
 长久以来，JavaScript 作为 Web 世界唯一的原生编程语言，几乎承载了浏览器中所有的逻辑与交互。尽管现代 JavaScript 引擎（如 [V8](https://v8.dev/)）通过即时编译（JIT）等技术极大地提升了其性能，但在执行计算密集型任务（如 3D 图形渲染、视频编解码、复杂的科学计算）时，其动态语言的本质依然使其与原生语言（如 C++, Rust）的性能存在难以逾越的鸿沟。为了打破这一性能天花板，**WebAssembly ([WASM](https://webassembly.org/))** 应运而生。
 
@@ -12,7 +11,7 @@ WebAssembly 是一种为 Web 浏览器设计的、全新的、可移植的、体
 
 从本质上讲，WebAssembly 为 Web 平台引入了第二种语言，它与 JavaScript 并非竞争关系，而是**互补共生**的关系。JavaScript 依然是控制 Web 页面交互、操作 DOM、调用 Web API 的“总指挥”，而 WASM 则像可以被 JS 调用的、专注于高性能计算的“外挂引擎”。
 
-#### **VI.2.1 WASM 的核心价值与革命性影响**
+## **VI.2.1 WASM 的核心价值与革命性影响**
 
 1. **极致的性能 (Near-Native Performance)**
    WASM 的核心吸引力在于其卓越的性能。由于它是一种预编译的、静态类型的低级二进制格式，浏览器可以极快地对其进行验证和编译成机器码，跳过了 JavaScript 所需的复杂动态解析和优化过程。这使得 WASM 在处理 CPU 密集型任务时，能够发挥出接近原生代码的执行效率，为在浏览器中运行重度应用（如专业级图像/视频编辑器、大型游戏、CAD 软件）打开了大门。
@@ -23,7 +22,7 @@ WebAssembly 是一种为 Web 浏览器设计的、全新的、可移植的、体
 3. **可预测的性能与安全性 (Predictable Performance & Security)**
    与 JavaScript 不同，WASM 的执行性能更加稳定和可预测，因为它避免了 JIT 编译中可能出现的“优化 - 去优化”循环。同时，WASM 运行在一个与 JavaScript 环境隔离的、内存安全的**沙箱 (Sandbox)** 中。它默认无法直接访问 DOM 或任意 Web API，所有与外部世界的交互都必须通过明确的 JavaScript API 作为中介。这种设计确保了 WASM 模块的执行是高度安全的，不会对用户系统造成威胁。
 
-#### **VI.2.2 应用场景与未来展望**
+## **VI.2.2 应用场景与未来展望**
 
 WebAssembly 的应用场景远不止于游戏和科学计算，它正在渗透到前端开发的各个领域：
 

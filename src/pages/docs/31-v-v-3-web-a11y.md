@@ -4,7 +4,6 @@ title: "V. 高级主题和专业开发最佳实践 / V.3 Web 可访问性 (A11y)
 order: 31
 slug: "31-v-v-3-web-a11y"
 ---
-### **V.3 Web 可访问性 (A11y)：为所有用户提供包容性设计**
 
 **目的**：确保所有用户，包括残障人士，都能有效地访问和使用 Web 内容。
 
@@ -16,7 +15,7 @@ slug: "31-v-v-3-web-a11y"
 
 可访问性既是法律法规的要求，也是重要的道德责任，而不仅仅是一个功能。遵守 WCAG 指南 直接扩大了用户范围，并改善了所有用户的可用性，包括非残障用户（例如，良好的键盘导航对所有用户都有益）。对语义化 HTML 的强调 是 A11y 的基础步骤，展示了因果关系。
 
-#### **表格：WCAG 2.2 焦点关键成功标准**
+## **表格：WCAG 2.2 焦点关键成功标准**
 
 | 成功标准                 | 等级 | 做法                             | 重要性                                       |
 | :----------------------- | :--- | :------------------------------- | :------------------------------------------- |
@@ -26,7 +25,7 @@ slug: "31-v-v-3-web-a11y"
 
 这个表格为可访问性的关键方面：键盘焦点，提供了具体、可操作的指导。它帮助开发者理解包容性设计的具体要求，这直接影响了相当一部分用户的可用性。
 
-#### **V.3.1 ARIA 属性的使用**
+## **V.3.1 ARIA 属性的使用**
 
 [WAI-ARIA](https://www.w3.org/WAI/ARIA/apg/) (Web Accessibility Initiative - Accessible Rich Internet Applications) 是一套技术规范，通过添加额外的 HTML 属性来增强 HTML 语义，从而改善残障人士使用辅助技术（如屏幕阅读器）访问 Web 应用时的体验。ARIA 属性不会改变元素的视觉表现，但会改变辅助技术对元素的解释方式。
 
@@ -34,7 +33,7 @@ ARIA 的核心作用包括：定义角色 (role)，描述元素是什么或做�
 
 在具体场景与代码示例中，当使用 `<div>` 或 `<span>` 等非语义化元素构建自定义按钮时，需要添加 `role="button"` 和`tabindex="0"` 使其可聚焦，并使用 `aria-pressed` 等状态属性来表示其状态。通过 JavaScript 监听点击事件，并切换 `aria-pressed` 的状态。对于复杂表单元素的关联，当某个输入框的标签由多个元素组成，或标签文本不在 `<label for>` 的直接关联范围内时，可以使用 `aria-labelledby` 将这个输入框与提供标签文本的元素关联起来。`aria-describedby` 用于提供额外描述信息，例如输入框的提示或错误信息。对于动态内容区域的通知，如聊天消息或通知中心，使用 `aria-live` 属性告知屏幕阅读器该区域的内容会动态变化。需要注意的是，应避免在已有语义的 HTML 元素上冗余地添加相同的 ARIA 角色，例如 `<button role="button">` 是不推荐的。
 
-#### **V.3.2 辅助技术测试方法**
+## **V.3.2 辅助技术测试方法**
 
 仅仅添加 ARIA 属性是不够的，必须通过实际测试来验证其效果。使用屏幕阅读器进行测试是关键步骤。常见的屏幕阅读器包括：Windows 上的免费开源 [NVDA](https://www.nvaccess.org/) (NonVisual Desktop Access) 和流行的商业软件 [JAWS](https://www.freedomscientific.com/products/software/jaws/) (Job Access With Speech)；macOS 和 iOS 内置的 [VoiceOver](https://www.apple.com/voiceover/info/guide/_1121.html)；Android 设备内置的 TalkBack。
 

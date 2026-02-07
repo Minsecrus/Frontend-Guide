@@ -4,7 +4,6 @@ title: "III. 基本开发环境和工具 / III.4 包管理器：npm、Yarn 和 p
 order: 13
 slug: "13-iii-iii-4-npmyarn-pnpm"
 ---
-### **III.4 包管理器：npm、Yarn 和 pnpm 依赖管理**
 
 **目的**：管理 JavaScript 项目中的依赖项（可重用代码包），促进安装、更新、配置和删除包。
 
@@ -14,7 +13,7 @@ slug: "13-iii-iii-4-npmyarn-pnpm"
 
 从 npm 到 Yarn 和 pnpm 的演变反映了行业对效率（速度、磁盘空间）和可靠性（严格的依赖检查，防止“幽灵依赖”）的追求。这直接影响了构建时间、CI/CD 性能和大型项目的稳定性。
 
-#### **表格：流行 JavaScript 包管理器比较**
+## **表格：流行 JavaScript 包管理器比较**
 
 | 特性         | [npm](https://www.npmjs.com/)          | [Yarn](https://yarnpkg.com/)                 | [pnpm](https://pnpm.io/)                     |
 | :----------- | :------------------------------------- | :------------------------------------------- | :------------------------------------------- |
@@ -25,4 +24,3 @@ slug: "13-iii-iii-4-npmyarn-pnpm"
 | **兼容性**   | [npm](https://www.npmjs.com/) 注册表   | [npm](https://www.npmjs.com/) 注册表、工作区 | [npm](https://www.npmjs.com/) 注册表、工作区 |
 
 这个表格对于澄清包管理器在现代前端工作流中的作用至关重要。它帮助学习者理解速度、灵活性和生态系统成熟度之间的权衡，指导他们根据项目需求选择最合适的工具。
-
