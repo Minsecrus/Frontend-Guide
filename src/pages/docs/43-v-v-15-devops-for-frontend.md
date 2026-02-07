@@ -2,7 +2,7 @@
 layout: ../../layouts/DocLayout.astro
 title: "V. 高级主题和专业开发最佳实践 / V.15部署与 DevOps for Frontend"
 order: 43
-slug: "43-v-v-15-devops-for-frontend"
+slug: "43-v-v-15-devops-for-Frontend"
 ---
 ### **V.15部署与 DevOps for Frontend**
 
