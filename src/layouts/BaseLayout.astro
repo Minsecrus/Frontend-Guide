@@ -10,6 +10,7 @@ const {
   title = "现代 Web 前端开发指南",
   description = "把长文指南拆分为可导航的 Astro 文档站点。"
 } = Astro.props as Props;
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
@@ -23,10 +24,10 @@ const {
   <body>
     <div class="bg-layer" aria-hidden="true"></div>
     <header class="site-header">
-      <a class="brand" href="/">Frontend Guide 2026</a>
+      <a class="brand" href={baseUrl}>Frontend Guide 2026</a>
       <nav class="top-nav" aria-label="Primary">
-        <a href="/">首页</a>
-        <a href="/docs/">文档</a>
+        <a href={baseUrl}>首页</a>
+        <a href={`${baseUrl}docs/`}>文档</a>
       </nav>
     </header>
     <main class="site-main">

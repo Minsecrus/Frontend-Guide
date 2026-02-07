@@ -12,10 +12,12 @@ const title = frontmatter?.title ?? "文档";
 const titleParts = title.split(" / ").map((value) => value.trim()).filter(Boolean);
 const parentTitle = titleParts.length > 1 ? titleParts[0] : "";
 const displayTitle = titleParts.length > 1 ? titleParts.slice(1).join(" / ") : title;
+const baseUrl = import.meta.env.BASE_URL;
+const docHref = (slug: string) => `${baseUrl}docs/${slug}/`;
 const normalizedPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`;
-const currentIndex = docs.findIndex((doc) => `/docs/${doc.slug}/` === normalizedPath);
+const currentIndex = docs.findIndex((doc) => docHref(doc.slug) === normalizedPath);
 const previous = currentIndex > 0 ? docs[currentIndex - 1] : null;
 const next = currentIndex >= 0 && currentIndex < docs.length - 1 ? docs[currentIndex + 1] : null;
 
@@ -77,7 +79,7 @@ function shortTitle(value: string) {
         {
           navNodes.map((node) => {
             if (node.kind === "single") {
-              const href = `/docs/${node.doc.slug}/`;
+              const href = docHref(node.doc.slug);
               const active = href === normalizedPath;
               return (
                 <li>
@@ -89,7 +91,7 @@ function shortTitle(value: string) {
               );
             }
 
-            const groupActive = node.children.some((item) => `/docs/${item.doc.slug}/` === normalizedPath);
+            const groupActive = node.children.some((item) => docHref(item.doc.slug) === normalizedPath);
             return (
               <li class="nav-group">
                 <button
@@ -103,10 +105,10 @@ function shortTitle(value: string) {
                   <span class="group-caret">▾</span>
                   {node.title}
                 </button>
-                <ul class="group-list">
-                  {node.children.map((item) => {
-                    const href = `/docs/${item.doc.slug}/`;
-                    const active = href === normalizedPath;
+                  <ul class="group-list">
+                    {node.children.map((item) => {
+                      const href = docHref(item.doc.slug);
+                      const active = href === normalizedPath;
                     return (
                       <li>
                         <a href={href} class={active ? "active" : ""}>
@@ -134,8 +136,8 @@ function shortTitle(value: string) {
       <slot />
 
       <footer class="doc-pager">
-        {previous ? <a href={`/docs/${previous.slug}/`}>← {shortTitle(previous.title)}</a> : <span></span>}
-        {next ? <a href={`/docs/${next.slug}/`}>{shortTitle(next.title)} →</a> : <span></span>}
+        {previous ? <a href={docHref(previous.slug)}>← {shortTitle(previous.title)}</a> : <span></span>}
+        {next ? <a href={docHref(next.slug)}>{shortTitle(next.title)} →</a> : <span></span>}
       </footer>
     </article>
   </div>
