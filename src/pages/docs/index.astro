@@ -1,0 +1,9 @@
+---
+import { docs } from "../../data/docs";
+
+if (docs.length === 0) {
+  throw new Error("No docs found. Run `npm run split` first.");
+}
+
+return Astro.redirect(`/docs/${docs[0].slug}/`);
+---

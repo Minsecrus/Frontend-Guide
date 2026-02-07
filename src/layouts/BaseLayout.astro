@@ -1,0 +1,36 @@
+---
+import "../styles/global.css";
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const {
+  title = "现代 Web 前端开发指南",
+  description = "把长文指南拆分为可导航的 Astro 文档站点。"
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="bg-layer" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="/">FrontEnd Guide 2026</a>
+      <nav class="top-nav" aria-label="Primary">
+        <a href="/">首页</a>
+        <a href="/docs/">文档</a>
+      </nav>
+    </header>
+    <main class="site-main">
+      <slot />
+    </main>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { docs } from "../data/docs";
+
+type Frontmatter = {
+  title?: string;
+  slug?: string;
+};
+
+const { frontmatter } = Astro.props as { frontmatter: Frontmatter };
+const title = frontmatter?.title ?? "文档";
+const titleParts = title.split(" / ").map((value) => value.trim()).filter(Boolean);
+const parentTitle = titleParts.length > 1 ? titleParts[0] : "";
+const displayTitle = titleParts.length > 1 ? titleParts.slice(1).join(" / ") : title;
+const normalizedPath = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+const currentIndex = docs.findIndex((doc) => `/docs/${doc.slug}/` === normalizedPath);
+const previous = currentIndex > 0 ? docs[currentIndex - 1] : null;
+const next = currentIndex >= 0 && currentIndex < docs.length - 1 ? docs[currentIndex + 1] : null;
+
+type SingleNode = {
+  kind: "single";
+  doc: (typeof docs)[number];
+  label: string;
+};
+
+type GroupNode = {
+  kind: "group";
+  id: string;
+  title: string;
+  children: Array<{ doc: (typeof docs)[number]; label: string }>;
+};
+
+const navNodes: Array<SingleNode | GroupNode> = [];
+let activeGroup: GroupNode | null = null;
+let groupCount = 0;
+
+for (const doc of docs) {
+  const parts = doc.title.split(" / ").map((value) => value.trim()).filter(Boolean);
+  if (parts.length <= 1) {
+    navNodes.push({
+      kind: "single",
+      doc,
+      label: doc.title
+    });
+    activeGroup = null;
+    continue;
+  }
+
+  const groupTitle = parts[0];
+  const label = parts.slice(1).join(" / ");
+  if (!activeGroup || activeGroup.title !== groupTitle) {
+    groupCount += 1;
+    activeGroup = {
+      kind: "group",
+      id: `group-${groupCount}`,
+      title: groupTitle,
+      children: []
+    };
+    navNodes.push(activeGroup);
+  }
+  activeGroup.children.push({ doc, label });
+}
+
+function shortTitle(value: string) {
+  const parts = value.split(" / ").map((item) => item.trim()).filter(Boolean);
+  return parts.length > 1 ? parts.slice(1).join(" / ") : value;
+}
+---
+
+<BaseLayout title={`${title} · FrontEnd Guide`}>
+  <div class="docs-shell">
+    <aside class="docs-sidebar">
+      <p class="sidebar-label">章节目录</p>
+      <ul class="nav-tree">
+        {
+          navNodes.map((node) => {
+            if (node.kind === "single") {
+              const href = `/docs/${node.doc.slug}/`;
+              const active = href === normalizedPath;
+              return (
+                <li>
+                  <a href={href} class={active ? "active" : ""}>
+                    <span>{node.doc.order.toString().padStart(2, "0")}</span>
+                    <strong>{node.label}</strong>
+                  </a>
+                </li>
+              );
+            }
+
+            const groupActive = node.children.some((item) => `/docs/${item.doc.slug}/` === normalizedPath);
+            return (
+              <li class="nav-group">
+                <button
+                  type="button"
+                  class={`group-title ${groupActive ? "active" : ""}`}
+                  data-group-toggle
+                  data-group-id={node.id}
+                  data-default-expanded={groupActive ? "true" : "false"}
+                  aria-expanded={groupActive ? "true" : "false"}
+                >
+                  <span class="group-caret">▾</span>
+                  {node.title}
+                </button>
+                <ul class="group-list">
+                  {node.children.map((item) => {
+                    const href = `/docs/${item.doc.slug}/`;
+                    const active = href === normalizedPath;
+                    return (
+                      <li>
+                        <a href={href} class={active ? "active" : ""}>
+                          <span>{item.doc.order.toString().padStart(2, "0")}</span>
+                          <strong>{item.label}</strong>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </aside>
+
+    <article class="docs-content">
+      <header class="doc-header">
+        <p class="doc-order">章节 {String(currentIndex + 1).padStart(2, "0")}</p>
+        {parentTitle ? <p class="doc-parent">{parentTitle}</p> : null}
+        <h1>{displayTitle}</h1>
+      </header>
+
+      <slot />
+
+      <footer class="doc-pager">
+        {previous ? <a href={`/docs/${previous.slug}/`}>← {shortTitle(previous.title)}</a> : <span></span>}
+        {next ? <a href={`/docs/${next.slug}/`}>{shortTitle(next.title)} →</a> : <span></span>}
+      </footer>
+    </article>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const GROUP_STATE_KEY = "docs-group-state-v1";
+      const SIDEBAR_SCROLL_KEY = "docs-sidebar-scroll-v1";
+      const sidebar = document.querySelector(".docs-sidebar");
+      if (!sidebar) return;
+
+      const readState = () => {
+        try {
+          return JSON.parse(localStorage.getItem(GROUP_STATE_KEY) || "{}");
+        } catch {
+          return {};
+        }
+      };
+
+      const writeState = (state) => {
+        localStorage.setItem(GROUP_STATE_KEY, JSON.stringify(state));
+      };
+
+      const setExpanded = (button, expanded) => {
+        button.setAttribute("aria-expanded", expanded ? "true" : "false");
+        const list = button.parentElement?.querySelector(".group-list");
+        if (list) list.hidden = !expanded;
+      };
+
+      const state = readState();
+      const toggles = sidebar.querySelectorAll("[data-group-toggle]");
+      toggles.forEach((button) => {
+        const id = button.getAttribute("data-group-id") || "";
+        const defaultExpanded = button.getAttribute("data-default-expanded") === "true";
+        const expanded = id in state ? !!state[id] : defaultExpanded;
+        setExpanded(button, expanded);
+        button.addEventListener("click", () => {
+          const current = button.getAttribute("aria-expanded") === "true";
+          const next = !current;
+          setExpanded(button, next);
+          if (id) {
+            state[id] = next;
+            writeState(state);
+          }
+        });
+      });
+
+      const savedScroll = Number(sessionStorage.getItem(SIDEBAR_SCROLL_KEY) || "0");
+      if (!Number.isNaN(savedScroll) && savedScroll > 0) {
+        sidebar.scrollTop = savedScroll;
+      }
+
+      const saveScroll = () => {
+        sessionStorage.setItem(SIDEBAR_SCROLL_KEY, String(sidebar.scrollTop));
+      };
+
+      sidebar.addEventListener("scroll", saveScroll, { passive: true });
+      sidebar.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", saveScroll);
+      });
+      window.addEventListener("beforeunload", saveScroll);
+    })();
+  </script>
+</BaseLayout>

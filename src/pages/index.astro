@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { docs } from "../data/docs";
+
+const firstDoc = docs[0];
+---
+
+<BaseLayout title="现代 Web 前端开发指南" description="Astro 版拆分文档站点">
+  <section class="hero">
+    <p class="eyebrow">Astro Documentation</p>
+    <h1>现代 Web 前端开发指南</h1>
+    <p>
+      已将原始长文拆分成可搜索、可导航、可渐进阅读的文档站。按章节进入，减少一次性阅读负担。
+    </p>
+    {firstDoc ? <a class="cta" href={`/docs/${firstDoc.slug}/`}>开始阅读</a> : null}
+  </section>
+</BaseLayout>
