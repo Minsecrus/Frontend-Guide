@@ -26,9 +26,6 @@ jobs:
         with:
           package-manager: npm@latest
           build-cmd: npm run build
-        env:
-          BASE_PATH: /FrontEnd
-          SITE_URL: ${{ format('https://{0}.github.io', github.repository_owner) }}
 
   deploy:
     needs: build
